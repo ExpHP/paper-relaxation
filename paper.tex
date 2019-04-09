@@ -1,0 +1,240 @@
+\documentclass[11pt]{article}
+
+\usepackage{fourier}
+\usepackage[numbers]{natbib}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{doi}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{braket}
+\usepackage{epstopdf}
+\usepackage{mathtools} % stackrel, mathclap, psmallmatrix
+\usepackage{enumitem} % setlist
+\usepackage[left=2cm,right=4cm]{geometry}
+
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\DeclareMathOperator{\Tr}{Tr}
+
+\newcommand{\chem}[1]{\ensuremath{\mathrm{#1}}}
+\newcommand{\wip}[1]{#1} % FIXME XXX get from moire doc
+\newcommand{\mat}[1]{\mathbf{#1}}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\oper}[1]{\hat{#1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\paren}[1]{\left(#1\right)}
+\newcommand{\braced}[1]{\left\{#1\right\}}
+\newcommand{\bracket}[1]{\left[#1\right]}
+%\newcommand{\vec}[1]{\overrightarrow{#1}}
+\newcommand{\N}[1]{\mat{N}^{(#1)}}
+\let\S\undefined
+\newcommand{\Sw}[2]{\mat{S}^{(#1,#2)}}
+\newcommand{\R}[2]{\mat{R}_{#1}^{(#2)}}
+\newcommand{\Rp}[3]{\left(\R{#1}{#2}\right)^{#3}}
+\newcommand{\Rps}[3]{(\R{#1}{#2})^{#3}}
+\newcommand{\Z}[2]{\mathbb{Z}_{#1}^{#2 \times #2}}
+\newcommand{\T}{^{\top}}
+\newcommand{\Tinv}{^{\top\!-1}}
+\newcommand{\defeq}{\stackrel{\mathclap{\normalfont\mbox{def}}}{=}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\Red}[3]{\rm{Mod}_{#2,#1}^{(#3)}}
+\newcommand{\Gcd}[3]{\rm{Gcd}_{\,#1}^{(#2,#3)}}
+\newcommand{\Hnf}{\rm{HNF}}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\andthen}{~~\Longrightarrow~~}
+%\newcommand{\ket}[1]{\Ket{#1}}
+%\newcommand{\bra}[1]{\Bra{#1}}
+%
+\newcommand{\hc}{^\dagger}
+\newcommand{\ppmatrix}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand{\bbmatrix}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\ppsmallmatrix}[1]{\begin{psmallmatrix}#1\end{psmallmatrix}}
+\newcommand{\bbsmallmatrix}[1]{\begin{bsmallmatrix}#1\end{bsmallmatrix}}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+% \MaybeJoin{a}{sep}{b} inserts 'sep' if 'a' and 'b' are both non-empty
+\newcommand{\MaybeJoin}[3]{#1\ifstrempty{#1}{}{\ifstrempty{#3}{}{#2}}#3}
+
+\graphicspath{{./fig/}}
+
+%---------- theorem box
+%- http://texblog.org/2015/09/30/fancy-boxes-for-theorem-lemma-and-proof-with-mdframed/
+
+\newcounter{theo}[section]\setcounter{theo}{0}
+\renewcommand{\thetheo}{\arabic{section}.\arabic{theo}}
+
+\newcommand{\theoConfig}[2]{%
+	\mdfsetup{frametitle={%
+		\tikz[baseline=(current bounding box.east),outer sep=0pt]
+		\node[anchor=east,rectangle,fill=#1]
+		{\strut #2};}
+	}%
+	\mdfsetup{linecolor=#1}%
+	\mdfsetup{topline=true}%
+	\mdfsetup{linewidth=2pt,innertopmargin=10pt}%
+	\mdfsetup{frametitleaboveskip=\dimexpr-\ht\strutbox\relax}%
+}
+
+\newenvironment{theo}[1][]{
+	\refstepcounter{theo}%
+	\theoConfig%
+		{blue!40!gray!20}%
+		{\MaybeJoin{Theorem~\thetheo}{:~}{#1}}%
+	\needspace{3cm}\begin{samepage}%
+	\begin{mdframed}[]\relax%
+}{\end{mdframed}\end{samepage}}
+
+\newenvironment{lem}[1][]{
+	\refstepcounter{theo}%
+	\theoConfig%
+		{red!40!gray!20}%
+		{\MaybeJoin{Lemma~\thetheo}{:~}{#1}}%
+	\needspace{3cm}\begin{samepage}%
+	\begin{mdframed}[]\relax%
+}{\end{mdframed}\end{samepage}}
+
+\newenvironment{prf}[1][]{%
+	\theoConfig%
+		{black!50!green!30!gray!20}%
+		{\MaybeJoin{Proof~of~\thetheo}{:~}{#1}}%
+	\begin{mdframed}[]\relax%
+}{\qed\end{mdframed}}
+
+\renewcommand\P{\oper P}
+\newcommand\S{\oper S}
+
+\title{\textbf{Title here}}
+\author{Michael Lamparski}
+\date{\today}
+\begin{document}
+
+\setlength\parindent{0em}
+\setlength\parskip{1.5em}
+
+\newenvironment{Itemize}
+{\begin{itemize}[topsep=0em]}
+{\end{itemize}}
+\newenvironment{Enumerate}
+{\begin{enumerate}[topsep=0em]}
+{\end{enumerate}}
+
+\section{Introduction}
+
+\subsection{Conjugate gradient}
+
+
+\subsection{Phonons in the harmonic approximation}
+
+Consider the potential energy function $V(\vec x)$,
+where $\vec x$ is the $3N$-dimensional position vector describing
+a periodic structure with $N$ atoms per unit cell.
+If $V$ has a local minimum at $\vec x_0$, then we know that the first derivatives of $V$ are zero, and thus fluctuations in potential energy about the equilibrium position
+are dominated by second derivatives.
+
+These can be collected in a $3N\times3N$ symmetric matrix of force constants:
+
+\begin{equation}
+\Phi_{\alpha\alpha'kk'll'} \equiv \left. \frac{\partial^2 V}{\partial x_{\alpha kl} \partial x_{\alpha' k'l'}} \right|_{\vec x = \vec x_0} = @@@@@@@
+\end{equation}
+
+where @@@@@@@@. (l is image, $\alpha$ is site, k is Cartesian)
+
+These force constants are used to construct the dynamical matrix
+
+\begin{equation}
+@@@@@@@@,
+\end{equation}
+
+whose eigensolutions yield the normal modes of vibration:
+
+\begin{equation}
+@@@@@@@@@@@@ (include exp term)
+\end{equation}
+
+@@@@@@ Mention acoustic modes here (3 translational + ? rotational) @@@@@@@
+
+Recall that we required for $V$ to be at a minimum; @@@@@@@@@ (mention negative modes and instability) @@@@@@@@@@
+
+\section{Method}
+
+
+
+\subsection{Implementation}
+
+At bare minimum, a code implementing this method must be capable of the following:  Computing phonons at the gamma point, and performing some sort of relaxation scheme such as conjugate gradient.  The latter requires some way to compute forces on arbitrary structures on demand, making it unfeasible to follow the workflow of a standalone tool like Phonopy.
+
+A plethora of benefits can be obtained by implementing it within a code base such as LAMMPS or VASP that has built-in computations of potential functions.@@@@@cite@@@@  Most notably this facilitates the reuse of information that is expensive to compute, such as neighbor lists.  It also can permit operation in terms of pairwise forces (rather than net forces on each atom), which brings an immense number of benefits---enabling automatic relaxation of lattice parameters; reducing the amount of work necessary to compute forces at displacements; and allowing the dynamical matrix to be generated directly in a sparse format.
+
+A downside of this integration is that it can drastically limit the number of potentials available for use with the code.  At present, the implementation of this method is in a private code originally designed to automate the computation of phonons in the moire patterns of twisted bilayer graphene.  This code originally used Phonopy for phonons, and called out to LAMMPS through its C interface to compute one of two REBO-based potentials. @@@@CITE@@@@ Support for increasingly larger moire patterns eventually demanded the replacement of Phonopy with new sparse matrix code for computing phonons, and one of the LAMMPS potentials was swapped out with a new implementation that made the pairwise forces available.
+
+Perhaps ironically, the reactive parts of REBO were left out of the reimplementation
+due to the immense amount of complexity they add to the code.
+More specifically, this means that the fractional bond weights ($f_{ij}$ in Brenner, $w_{ij}$ in Stuart)
+are always taken to be $0$ or $1$.
+To ensure that this simplification does not impact our results,
+the code produces visible warnings if a bond length ever enters the reactive regime.
+
+Throughout the rest of the paper, these potentials will be named as follows:
+
+\begin{itemize}
+	\item \verb|lammps-airebo|: LAMMPS' \verb|pair_style airebo|. @@@@@cite@@@@@
+	\item \verb|lammps-kcz|: LAMMPS' \verb|pair style hybrid rebo kolmogorov/crespi/z|. @@@@@cite@@@@@@@
+	\item \verb|lammps-kc-full|: LAMMPS' \verb|pair style hybrid rebo kolmogorov/crespi/full|. @@@@@cite@@@@@@@
+	\item \verb|nonreactive-kcz|: The reimplementation of \verb|lammps-kcz| that lacks the reactive parts.  When this is used, lattice parameters can be relaxed continuously during conjugate gradient.  It also includes bugfixes to two of the spline parameters in hydrocarbons, identified by Cyril Falvo. @@@@@cite@@@@@@
+\end{itemize}
+
+
+\subsection{Automatic classification of acoustic modes}
+
+If this technique is to be used in automated systems that relax structures, some form of criterion is necessary to decide when to stop running iterations.
+
+The simplest method is, of course, to just run a fixed number of iterations.  Even if negative modes are found on the first iteration, it is almost inconceivable that more could be found after relaxing along them (unless they are numerical artefacts!).  Thus, two iterations is likely sufficient for most structures. However, computing and diagonalizing the dynamical matrix can be an extremely expensive step, and so it would be wise to stop after a single iteration whenever possible.
+
+Doing so requires a way to detect if the first computed eigenspectrum actually contains any unstable normal modes.  Unfortunately, acoustic modes often show up with negative eigenvalues, and it may be unreliable to identify acoustic modes solely by checking the eigenvalue against a fixed threshold.
+
+\subsubsection{Pure translational modes}
+
+Thankfully, pure translational modes are easily identified by looking at their eigenvector.  One can formally define the ``acousticness'' of an eigenket as the square norm of its projection onto the subspace spanned by the three pure-translational eigenvectors along the Cartesian axes.  This value is ideally 1 for pure translational modes and 0 for all others; a detection threshold of $0.95$ was chosen.
+
+\subsubsection{Other acoustic modes}
+
+Unfortunately, certain situations may give rise to other modes that are far less easy to classify.  In particular:
+
+\begin{itemize}
+	\item Lower-dimensional systems give rise to \textbf{rotational acoustic modes}.  These can show up with negative eigenvalues of highly unpredictable magnitude.
+	\item Multiple non-interacting fragments in a structure will give rise to \textbf{piecewise acoustic modes}, where the fragments move independently of one another.  Not only are these modes difficult to identify, but their mere existence can cause the diagonalizer to produce fewer than three pure translational modes thanks to the additional degeneracies.
+\end{itemize}
+No method is currently presented for correctly identifying either of these types of modes in three-dimensional codes that employ periodic boundary conditions.
+
+\section{Results}
+
+@@@@@@@@@@ should describe motivating example of lennard jones-on-tblg because it shows how sensitive the method is, even if the end result is not of physical significance @@@@@@@@@@
+
+A variety of hydrocarbon structures were investigated using this code.
+
+This method was not found to produce any lower-energy structures than conjugate gradient for the following structures:
+
+\begin{itemize}
+	\item Azulene (\chem{C_{10}H_8})
+	\item A $C_60$ molecule, with one bond rotated from its icosahedral form to produce a single pair of heptagons.
+	\item A supercell of cumulene with two atoms.
+\end{itemize}
+
+This is to say that, when REBO is used on these structures, plain conjugate gradient relaxes them into a form that has the same bond structure as the original, but with no negative eigenmodes, indicating that they are indeed local minima.
+
+Notable among this list is that REBO was not found to predict the Peierls distortion of cumulene into polyyne.  This is expected because @@@@@@@@@@@@, and different results may be expected by using a potential that accounts for @@@@@@@@@.
+
+A 3-layer onion of fullerenes (with concentric molecules of $\chem{C_{60}}$, $\chem{C_{240}}$, and $\chem{C_{540}}$) was also tested to see if rotations could be induced; however, it was found to relax during CG into a bizarre shape under the LJ interactions modeled by \verb|lammps-airebo|. @@@@@@ TODO use new \verb|kolmogorov/crespi/full| support @@@@@@@
+
+\section{Conclusion}
+
+@@@@@@@@@@@
+
+\end{document}
