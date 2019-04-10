@@ -1,7 +1,7 @@
 \documentclass[11pt]{article}
 
 \usepackage{fourier}
-\usepackage[numbers]{natbib}
+\usepackage[style=numeric]{biblatex}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
@@ -14,6 +14,8 @@
 \usepackage{mathtools} % stackrel, mathclap, psmallmatrix
 \usepackage{enumitem} % setlist
 \usepackage[left=2cm,right=4cm]{geometry}
+
+\addbibresource{zotero-bbt.bib}
 
 \theoremstyle{definition}
 \newtheorem*{definition}{Definition}
@@ -113,6 +115,7 @@
 \title{\textbf{Title here}}
 \author{Michael Lamparski}
 \date{\today}
+
 \begin{document}
 
 \setlength\parindent{0em}
@@ -236,5 +239,7 @@ A 3-layer onion of fullerenes (with concentric molecules of $\chem{C_{60}}$, $\c
 \section{Conclusion}
 
 @@@@@@@@@@@
+
+\printbibliography
 
 \end{document}
